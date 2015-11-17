@@ -23,13 +23,13 @@ RADIUS = 20  # in meters
 def get_nimby_score(loc_data):
     params = {'key': API_KEY,
               'radius': RADIUS,
-              'types': "|".join(NIMBY_LOCS)}
+              'types': '|'.join(NIMBY_LOCS)}
     score = 0
     for (lati, longi) in loc_data:
-        params['location'] = "%s,%s" % (lati, longi)
+        params['location'] = '%s,%s' % (lati, longi)
         res = requests.get(PLACE_API, params=params)
         res = json.loads(res.text)
-        if len(res["results"]) > 0:
+        if len(res['results']) > 0:
             score += 5
 
     score = min(score, 50)
@@ -39,13 +39,13 @@ def get_nimby_score(loc_data):
 def get_yimby_score(loc_data):
     params = {'key': API_KEY,
               'radius': RADIUS,
-              'types': "|".join(YIMBY_LOCS)}
+              'types': '|'.join(YIMBY_LOCS)}
     score = 50
     for (lati, longi) in loc_data:
-        params['location'] = "%s,%s" % (lati, longi)
+        params['location'] = '%s,%s' % (lati, longi)
         res = requests.get(PLACE_API, params=params)
         res = json.loads(res.text)
-        if len(res["results"]) > 0:
+        if len(res['results']) > 0:
             score -= 5
 
     score = max(score, 0)
@@ -53,11 +53,14 @@ def get_yimby_score(loc_data):
 
 
 def get_brma_score(loc_data):
+    score = {}
     nimby_score = get_nimby_score(loc_data)
-    print "nimby_score", nimby_score
+    score['nimby_score'] = nimby_score
 
     yimby_score = get_yimby_score(loc_data)
-    print "yimby_score", yimby_score
+    score['yimby_score'] = yimby_score
+
+    return score
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
@@ -66,5 +69,5 @@ if __name__ == '__main__':
                 (50.737204, 7.102983): 120
             }
 
-    get_brma_score(loc_data)
-    pass
+    score = get_brma_score(loc_data)
+    print score
