@@ -42,5 +42,5 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True)
 
 # sample data to post
-# 50.73858,7.07873,120
-# 50.737204,7.102983,120
+# 50.73858,7.07873,120 (McFit)
+# 50.737204,7.102983,120 (Subway)
