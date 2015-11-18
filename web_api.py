@@ -22,7 +22,7 @@ def api():
     gps_data = request.form['gps_data']
     loc_data = get_loc_data(gps_data)
     score = scorer.get_brma_score(loc_data)
-    return jsonify(**score)
+    return json.dumps(score)
 
 
 def get_loc_data(gps_data):
