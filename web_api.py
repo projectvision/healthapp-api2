@@ -19,16 +19,33 @@ def welcome():
 
 @app.route('/api/v1', methods=['GET', 'POST'])
 def api():
-    gps_data = request.form['gps_data']
+    if 'gps_data' in request.form:
+        gps_data = request.form['gps_data']
+    else:
+        return 'error: gps_data not found'
     loc_data = get_loc_data(gps_data)
-    score = scorer.get_brma_score(loc_data)
-    return json.dumps(score)
+    if 'error' in loc_data:
+        return loc_data['error']
+    else:
+        score = scorer.get_brma_score(loc_data)
+        return json.dumps(score)
 
 
 def get_loc_data(gps_data):
     loc_data = {}
     for line in gps_data.splitlines():
-        lati, longi, time = [float(v) for v in line.split(',')]
+        if line.strip() == '':
+            # empty line
+            continue
+        values = line.split(',')
+        if len(values) != 3:
+            loc_data['error'] = 'error: wrong input format'
+            return loc_data
+        try:
+            lati, longi, time = [float(v) for v in line.split(',')]
+        except ValueError:
+            loc_data['error'] = 'error: wrong input values'
+            return loc_data
         key = (lati, longi)
         if key in loc_data:
             loc_data[key] += time
@@ -44,3 +61,6 @@ if __name__ == '__main__':
 # sample data to post
 # 50.73858,7.07873,120 (McFit)
 # 50.737204,7.102983,120 (Subway)
+
+# 37.757815,-122.5076408,120 #SF
+# 40.7058316,-74.2582003,120 #New York
