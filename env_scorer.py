@@ -9,6 +9,27 @@ import json
 import logging
 import requests
 import urllib
+import crime_rate_api
+
+
+def get_crime_score(loc_data):
+    total_crime_score = 0.0
+    total_time_spent = 0.0
+    for key in loc_data:
+        (lati, longi) = key
+        time_spent = loc_data[key]
+        crime_rate = crime_rate_api.get_crime_rate(lati, longi)
+        if crime_rate is not None:
+            total_crime_score += crime_rate * time_spent
+            total_time_spent += time_spent
+
+    if total_time_spent > 0:
+        avg_crime_score = total_crime_score / total_time_spent
+        crime_score = (avg_crime_score) * 12.5 / 100
+        crime_score = min(max(0, crime_score), 12.5)
+        return crime_score
+    else:
+        return None
 
 
 def get_aqi_score(loc_data):
@@ -41,8 +62,9 @@ def get_aqi_score(loc_data):
 
 def get_env_score(loc_data):
     env_score = {}
-    nimby_score = get_aqi_score(loc_data)
-    env_score['aqi'] = nimby_score
+    aqi_score = get_aqi_score(loc_data)
+    env_score['aqi'] = aqi_score
+    env_score['crime'] = get_crime_score(loc_data)
 
     return env_score
 
