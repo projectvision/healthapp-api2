@@ -9,6 +9,7 @@ import json
 import logging
 import env_scorer
 import requests
+import yaml
 
 from pprint import pprint
 
@@ -16,8 +17,10 @@ LOGGER = logging.getLogger(__name__)
 PLACE_API = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 API_KEY = 'AIzaSyCAYAAI4o6mhETaz_YUrGvTVTQi9ePDKbU'
 
-YIMBY_LOCS = ['grocery_or_supermarket', 'gym']
-NIMBY_LOCS = ['bar', 'meal_takeaway', 'restaurant']
+CONFIG = yaml.load(open("config.yaml"))
+
+YIMBY_LOCS = CONFIG["YIMBY"]
+NIMBY_LOCS = CONFIG["NIMBY"]
 RADIUS = 20  # in meters
 
 
@@ -63,6 +66,8 @@ def get_brma_score(loc_data):
 
     env_score = env_scorer.get_env_score(loc_data)
     score['env_score'] = env_score
+
+    score['__final__'] = env_score['env_norm'] + nimby_score + yimby_score
 
     return score
 

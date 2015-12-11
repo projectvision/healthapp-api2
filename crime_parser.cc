@@ -1,6 +1,8 @@
 /*
  * A utility script to parse crime spot data
  *
+ * author: ankush.shah.nitk@gmail.com
+ * date: 12th December
  */
 #include <iostream>
 #include <fstream>

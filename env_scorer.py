@@ -29,7 +29,9 @@ def get_crime_score(loc_data):
         crime_score = min(max(0, crime_score), 12.5)
         return crime_score
     else:
-        return None
+        # if we don't know about the place,
+        # we assume the best case and return 0
+        return 0
 
 
 def get_aqi_score(loc_data):
@@ -57,7 +59,9 @@ def get_aqi_score(loc_data):
         aqi_score = min(max(0, aqi_score), 12.5)
         return aqi_score
     else:
-        return None
+        # if we don't know about the place,
+        # we assume the best case and return 0
+        return 0
 
 
 def get_env_score(loc_data):
@@ -65,7 +69,7 @@ def get_env_score(loc_data):
     aqi_score = get_aqi_score(loc_data)
     env_score['aqi'] = aqi_score
     env_score['crime'] = get_crime_score(loc_data)
-
+    env_score['env_norm'] = 2 * (env_score['aqi'] + env_score['crime'])
     return env_score
 
 

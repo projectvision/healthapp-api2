@@ -1,0 +1,25 @@
+YIMBY:
+    - grocery_or_supermarket
+    - gym
+    - school
+    - church
+    - university
+    - hospital
+    - mosque
+    - hindu_temple
+    - places_of_worship
+    - library
+    - doctor
+
+NIMBY:
+    - airport
+    - shopping_mall
+    - night_club
+    - bus_station
+    - liquor_store
+    - casino
+    - bakery
+    - bar
+    - meal_takeaway
+    - restaurant
+
