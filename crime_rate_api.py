@@ -22,6 +22,8 @@ def get_crime_rate(lat, lng):
 
 def get_crime_map():
     global CRIME_MAP
+    # if the CRIME_MAP is not already loaded
+    # then load it from the api
     if CRIME_MAP is None:
         CRIME_MAP = {}
         # csv containing latitude, longitude and no_of_crimes
