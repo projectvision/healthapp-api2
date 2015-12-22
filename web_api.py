@@ -24,8 +24,8 @@ def api():
     else:
         return 'error: gps_data not found'
     loc_data = get_loc_data(gps_data)
-    if 'error' in loc_data:
-        return loc_data['error']
+    if 'projectvision_error_code' in loc_data:
+        return json.dumps(loc_data)
     else:
         score = scorer.get_brma_score(loc_data)
         return json.dumps(score)
@@ -33,19 +33,51 @@ def api():
 
 def get_loc_data(gps_data):
     loc_data = {}
-    for line in gps_data.splitlines():
-        if line.strip() == '':
-            # empty line
-            continue
-        values = line.split(',')
-        if len(values) != 3:
-            loc_data['error'] = 'error: wrong input format'
+    try:
+        gps_data = json.loads(gps_data)
+    except ValueError:
+        loc_data["projectvision_error_code"] = 100
+        loc_data["error_desc"] = "invalid json: %s" % gps_data
+        return loc_data
+
+    for loc in gps_data["location"]:
+        if "latitude" in loc:
+            try:
+                lati = float(loc["latitude"])
+            except ValueError:
+                loc_data["projectvision_error_code"] = 101
+                loc_data["error_desc"] = "invalid value for latitude: %s" % loc["latitude"]
+                return loc_data
+        else:
+            loc_data["projectvision_error_code"] = 102
+            loc_data["error_desc"] = "missing value for latitude in %s" % loc
             return loc_data
-        try:
-            lati, longi, time = [float(v) for v in line.split(',')]
-        except ValueError:
-            loc_data['error'] = 'error: wrong input values'
+
+        if "longitude" in loc:
+            try:
+                longi = float(loc["longitude"])
+            except ValueError:
+                loc_data["projectvision_error_code"] = 101
+                loc_data["error_desc"] = "invalid value for longitude: %s" % loc["longitude"]
+                return loc_data
+        else:
+            loc_data["projectvision_error_code"] = 102
+            loc_data["error_desc"] = "missing value for longitude in %s" % loc
             return loc_data
+
+        if "duration" in loc:
+            try:
+                time = float(loc["duration"])
+            except ValueError:
+                loc_data["projectvision_error_code"] = 101
+                loc_data["error_desc"] = "invalid value for duration: %s" % loc["duration"]
+                return loc_data
+        else:
+            loc_data["projectvision_error_code"] = 102
+            loc_data["error_desc"] = "missing value for duration in %s" % loc
+            return loc_data
+
+        # at this point data is completely checked
         key = (lati, longi)
         if key in loc_data:
             loc_data[key] += time
