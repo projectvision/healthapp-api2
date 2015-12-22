@@ -39,6 +39,8 @@ def get_crime_score(loc_data):
 
 
 def get_aqi_score(loc_data):
+    # base url of the air quality index api
+    # from breezometer
     api_url = 'http://api.breezometer.com/baqi/?'
     api_key = '906d4d728056496b85b059e335a17a18'
     params = {}
@@ -51,10 +53,10 @@ def get_aqi_score(loc_data):
         params['lat'] = lati
         params['lon'] = longi
         data = urllib.urlencode(params)
-        res = requests.get(api_url + data)
-        res = json.loads(res.text)
-        if 'breezometer_aqi' in res:
-            total_aqis += res['breezometer_aqi'] * time_spent
+        response = requests.get(api_url + data)
+        response = json.loads(response.text)
+        if 'breezometer_aqi' in response:
+            total_aqis += response['breezometer_aqi'] * time_spent
             total_time_spent += time_spent
 
     if total_time_spent > 0:
