@@ -24,6 +24,7 @@ def get_crime_map():
     global CRIME_MAP
     if CRIME_MAP is None:
         CRIME_MAP = {}
+        # csv containing latitude, longitude and no_of_crimes
         with open("data/crime_map.csv") as f:
             for line in f.readlines():
                 lat, lng, n_crimes = line.split(",")
