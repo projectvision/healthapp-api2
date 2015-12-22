@@ -69,7 +69,7 @@ def get_env_score(loc_data):
     aqi_score = get_aqi_score(loc_data)
     env_score['aqi'] = aqi_score
     env_score['crime'] = get_crime_score(loc_data)
-    env_score['env_norm'] = 2 * (env_score['aqi'] + env_score['crime'])
+    env_score['normalized_environment_score'] = 2 * (env_score['aqi'] + env_score['crime'])
     return env_score
 
 

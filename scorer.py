@@ -65,9 +65,9 @@ def get_brma_score(loc_data):
     score['yimby_score'] = yimby_score
 
     env_score = env_scorer.get_env_score(loc_data)
-    score['env_score'] = env_score
+    score['environment_score'] = env_score
 
-    score['__final__'] = env_score['env_norm'] + nimby_score + yimby_score
+    score['brma_score'] = env_score['normalized_environment_score'] + nimby_score + yimby_score
 
     return score
 
