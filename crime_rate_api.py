@@ -6,18 +6,18 @@
 '''
 
 CRIME_MAP = None
+CRIME_SCALE = 5
 
 
 def get_crime_rate(lat, lng):
     key = (round(lat, 1), round(lng, 1))
     crime_map = get_crime_map()
-
+    crime_rate = None
     if key in crime_map:
         n_crimes = crime_map[key]
-        rate = max(min(n_crimes / 5, 100), 0)
-        rate = int(rate)
-        return rate
-    return None
+        crime_rate = max(min(n_crimes / CRIME_SCALE, 100), 0)
+        crime_rate = int(crime_rate)
+    return crime_rate
 
 
 def get_crime_map():
