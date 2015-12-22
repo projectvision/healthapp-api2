@@ -11,6 +11,10 @@ import requests
 import urllib
 import crime_rate_api
 
+WEIGHT_CRIME_SCORE = 12.5
+WEIGHT_AQI = 12.5
+NORM_ENV_SCORE = 2
+
 
 def get_crime_score(loc_data):
     total_crime_score = 0.0
@@ -25,8 +29,8 @@ def get_crime_score(loc_data):
 
     if total_time_spent > 0:
         avg_crime_score = total_crime_score / total_time_spent
-        crime_score = (avg_crime_score) * 12.5 / 100
-        crime_score = min(max(0, crime_score), 12.5)
+        crime_score = (avg_crime_score) * WEIGHT_CRIME_SCORE / 100
+        crime_score = min(max(0, crime_score), WEIGHT_CRIME_SCORE)
         return crime_score
     else:
         # if we don't know about the place,
@@ -55,8 +59,8 @@ def get_aqi_score(loc_data):
 
     if total_time_spent > 0:
         avg_aqi = total_aqis / total_time_spent
-        aqi_score = (100 - avg_aqi) * 12.5 / 100
-        aqi_score = min(max(0, aqi_score), 12.5)
+        aqi_score = (100 - avg_aqi) * WEIGHT_AQI / 100
+        aqi_score = min(max(0, aqi_score), WEIGHT_AQI)
         return aqi_score
     else:
         # if we don't know about the place,
@@ -69,7 +73,7 @@ def get_env_score(loc_data):
     aqi_score = get_aqi_score(loc_data)
     env_score['air_quality_index'] = aqi_score
     env_score['crime_rate'] = get_crime_score(loc_data)
-    env_score['normalized_environment_score'] = 2 * (env_score['air_quality_index'] + env_score['crime_rate'])
+    env_score['normalized_environment_score'] = NORM_ENV_SCORE * (env_score['air_quality_index'] + env_score['crime_rate'])
     return env_score
 
 
