@@ -1,8 +1,8 @@
 '''
-author: ankush.shah.nitk@gmail.com
-date: 29th Nov 2015
-desc: calculate the environment score using
-      Behavior Risk Model Algorithm (brma)
+* Copyright ProjectVisionHealth (c) 2015
+* Author Name: Ankush Shah
+* Date : 22 Dec 2015
+* Description: Module for calculating environment metrics
 '''
 
 import json

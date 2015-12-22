@@ -1,7 +1,9 @@
 '''
-Created on Nov 13, 2015
-
-@author: ankush.shah.nitk@gmail.com
+* Copyright ProjectVisionHealth (c) 2015
+* Author Name: Ankush Shah
+* Date : 22 Dec 2015
+* Description: Web interface for handline get/post requests
+               for Behavior Risk Model Algorithm (brma)api
 '''
 
 import os

@@ -1,8 +1,9 @@
 '''
-author: ankush.shah.nitk@gmail.com
-date: 10th Nov 2015
-desc: calculate the score using
-      Behavior Risk Model Algorithm (brma)
+* Copyright ProjectVisionHealth (c) 2015
+* Author Name: Ankush Shah
+* Date : 22 Dec 2015
+* Description: Module for calculating the nimby, yimby and
+               the final brma score
 '''
 
 import json

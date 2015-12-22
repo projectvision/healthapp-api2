@@ -1,7 +1,8 @@
 '''
-Created on Nov 6, 2015
-
-@author: ankush.shah.nitk@gmail.com
+* Copyright ProjectVisionHealth (c) 2015
+* Author Name: Ankush Shah
+* Date : 22 Dec 2015
+* Description: Module for providing the crime rate api
 '''
 
 CRIME_MAP = None
