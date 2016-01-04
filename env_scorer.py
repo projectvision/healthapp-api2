@@ -10,10 +10,13 @@ import logging
 import requests
 import urllib
 import crime_rate_api
+import yaml
 
 WEIGHT_CRIME_SCORE = 12.5
 WEIGHT_AQI = 12.5
 NORM_ENV_SCORE = 2
+
+CONFIG = yaml.load(open("config.yaml"))
 
 
 def get_crime_score(loc_data):
@@ -41,8 +44,8 @@ def get_crime_score(loc_data):
 def get_aqi_score(loc_data):
     # base url of the air quality index api
     # from breezometer
-    api_url = 'http://api.breezometer.com/baqi/?'
-    api_key = '906d4d728056496b85b059e335a17a18'
+    api_url = CONFIG['APIS']['breezometer_aqi_api']
+    api_key = CONFIG['APIS']['breezometer_aqi_api_key']
     params = {}
     params['key'] = api_key
     total_aqis = 0.0

@@ -15,10 +15,11 @@ import yaml
 from pprint import pprint
 
 LOGGER = logging.getLogger(__name__)
-PLACE_API = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-API_KEY = 'AIzaSyCAYAAI4o6mhETaz_YUrGvTVTQi9ePDKbU'
 
 CONFIG = yaml.load(open("config.yaml"))
+
+PLACE_API = CONFIG['APIS']['google_place_api']
+API_KEY = CONFIG['APIS']['google_place_api_key']
 
 YIMBY_LOCS = CONFIG["YIMBY"]
 NIMBY_LOCS = CONFIG["NIMBY"]

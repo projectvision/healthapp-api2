@@ -23,3 +23,8 @@ NIMBY:
     - meal_takeaway
     - restaurant
 
+APIS:
+    google_place_api: https://maps.googleapis.com/maps/api/place/nearbysearch/json
+    google_place_api_key: AIzaSyCAYAAI4o6mhETaz_YUrGvTVTQi9ePDKbU
+    breezometer_aqi_api: http://api.breezometer.com/baqi/?
+    breezometer_aqi_api_key: 906d4d728056496b85b059e335a17a18
