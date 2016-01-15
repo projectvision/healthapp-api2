@@ -33,10 +33,11 @@ def get_nimby_score(loc_data):
     score = 0
     for (lati, longi) in loc_data:
         params['location'] = '%s,%s' % (lati, longi)
+        time_spent = loc_data[(lati, longi)]
         res = requests.get(PLACE_API, params=params)
         res = json.loads(res.text)
         if len(res['results']) > 0:
-            score += 5
+            score += min(5, 5. * time_spent / 60)
 
     score = min(score, 50)
     return score
@@ -49,10 +50,11 @@ def get_yimby_score(loc_data):
     score = 50
     for (lati, longi) in loc_data:
         params['location'] = '%s,%s' % (lati, longi)
+        time_spent = loc_data[(lati, longi)]
         res = requests.get(PLACE_API, params=params)
         res = json.loads(res.text)
         if len(res['results']) > 0:
-            score -= 5
+            score -= min(5, 5. * time_spent / 60)
 
     score = max(score, 0)
     return score
