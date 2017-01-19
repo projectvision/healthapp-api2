@@ -1,5 +1,7 @@
 YIMBY:
-    - grocery_or_supermarket
+    - restaurant
+    - pharmacy
+    - local_government_office
     - gym
     - school
     - church
@@ -7,21 +9,38 @@ YIMBY:
     - hospital
     - mosque
     - hindu_temple
-    - places_of_worship
     - library
     - doctor
+    - synagogue
+    - city_hall
+    - dentist
+    - doctor
+    - trainsit_station
+    - bus_station
+    - park
+    - subway_station
 
 NIMBY:
     - airport
+    - gas_station
+    - convenience_store
     - shopping_mall
     - night_club
-    - bus_station
+    - rv_park
+    - parking
     - liquor_store
     - casino
     - bakery
     - bar
     - meal_takeaway
-    - restaurant
+    - meal_delivery
+    - parking
+    - police
+    - storage
+    - movie_theater
+    - laundry
+    - bowling_alley
+    - movie_rental
 
 APIS:
     google_place_api: https://maps.googleapis.com/maps/api/place/nearbysearch/json
